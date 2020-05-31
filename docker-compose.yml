@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  back-end:
+    build: ./back-end
+    container_name: back-end
+    restart: unless-stopped
+    working_dir: /usr/src/app
+    volumes:
+      - ./back-end:/usr/src/app
+    ports:
+      - '4000:4000'
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+    command: 'yarn start'
+
+  front-end:
+    image: 'node:12-alpine'
+    container_name: front-end
+    restart: unless-stopped
+    working_dir: /myapp/front-end
+    stdin_open: true
+    volumes:
+      - ./front-end:/myapp/front-end
+    ports:
+      - '3000:3000'
+    networks:
+      - app-network
+    command: 'yarn start'
+
+  mysql:
+    image: mysql:5.7
+    container_name: 'mysql'
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db_data:/var/lib/mysql
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
