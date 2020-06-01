@@ -6,5 +6,12 @@
   "password": "123456",
   "database": "minano_betonamugo",
   "entities": ["dist/**/*.entity{.ts,.js}"],
+  "migrations": [
+    "dist/migration/*.js"
+  ],
+  "cli": {
+    "entitiesDir": "src/entity",
+    "migrationsDir": "src/migration"
+  },
   "synchronize": true
 }
