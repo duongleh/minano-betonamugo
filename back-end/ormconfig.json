@@ -1,0 +1,10 @@
+{
+  "type": "mysql",
+  "host": "mysql",
+  "port": 3306,
+  "username": "root",
+  "password": "123456",
+  "database": "minano_betonamugo",
+  "entities": ["dist/**/*.entity{.ts,.js}"],
+  "synchronize": true
+}

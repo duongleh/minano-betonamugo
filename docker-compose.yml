@@ -14,7 +14,7 @@ services:
       - mysql
     networks:
       - app-network
-    command: 'yarn start'
+    command: 'yarn start:dev'
 
   front-end:
     image: 'node:12-alpine'
@@ -35,7 +35,11 @@ services:
     container_name: 'mysql'
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_ROOT_PASSWORD: '123456'
+      MYSQL_DATABASE: minano_betonamugo
+      MYSQL_USER: ramu
+      MYSQL_PASSWORD: '123456'
+    tty: true
     ports:
       - 3306:3306
     volumes:
