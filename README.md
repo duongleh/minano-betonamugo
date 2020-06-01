@@ -23,6 +23,18 @@ yarn
 docker-compose up
 ```
 
+### migate database
+```
+docker-compose exec mysql mysql -u root -p
+
+===============
+/// password
+123456
+
+===============
+create database minano_betonamugo
+```
+
 ### Down
 ```
 docker-compose down
