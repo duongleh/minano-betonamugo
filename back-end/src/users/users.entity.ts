@@ -1,18 +1,19 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn } from 'typeorm';
+import { Course } from '../courses/courses.entity';
 import { Enrollment } from '../enrollments/enrollments.entity';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  userId: number;
+  id: number;
 
-  @Column({ length: 50, unique: true })
+  @Column()
   name: string;
 
   @Column({ unique: true })
   email: string;
 
-  @Column({ nullable: false })
+  @Column()
   password: string;
 
   @Column()
@@ -22,14 +23,17 @@ export class User {
   avatar: string;
 
   @Column()
-  isblock: boolean;
+  isBlock: boolean;
 
-  @Column({ nullable: false })
+  @Column()
   role: boolean;
 
-  @Column({ nullable: false })
-  time_stamp: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
-  @OneToMany(() => Enrollment, (enrollment) => enrollment.userId)
-  public enrollment = Enrollment;
+  @OneToMany(type => Course, course => course.owner)
+  courses: Course[];
+
+  @OneToMany(type => Enrollment, enrollment => enrollment.course)
+  enrollments: Enrollment[];
 }

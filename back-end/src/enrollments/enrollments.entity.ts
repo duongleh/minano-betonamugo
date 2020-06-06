@@ -1,33 +1,27 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn } from 'typeorm';
 import { User } from '../users/users.entity';
 import { Course } from '../courses/courses.entity';
 
 @Entity()
 export class Enrollment {
   @PrimaryGeneratedColumn({})
-  enrollment: number;
+  id: number;
 
-  @Column({ nullable: true })
-  userId: number;
-
-  @Column({ nullable: true })
-  courseId: string;
-
-  @Column({ nullable: true })
+  @Column()
   rate: number;
 
-  @Column({ nullable: false })
-  password: string;
+  @Column()
+  comment: string;
 
-  @Column({})
+  @Column()
   achievement: string;
 
-  @Column({})
-  time_stamp: string;
+  @CreateDateColumn()
+  createdAt: Date;
 
-  @ManyToOne(() => User, (user) => user.userId)
-  public user: User
+  @ManyToOne(type => User, user => user.enrollments)
+  user: User;
 
-  @ManyToOne(() => Course, (course) => course.courseId)
-  public course: Course
+  @ManyToOne(type => Course, course => course.enrollments)
+  course: Course;
 }

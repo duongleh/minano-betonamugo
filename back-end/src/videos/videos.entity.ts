@@ -1,22 +1,23 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne } from 'typeorm';
+import { Course } from '../courses/courses.entity';
 
 @Entity()
 export class Video {
-  @PrimaryGeneratedColumn({})
-  videoId: number;
-
-  @Column({ nullable: true })
-  courseId: number;
-
-  @Column({ nullable: false })
+  @PrimaryGeneratedColumn()
+  id: number;
+  
+  @Column()
   title: string;
 
-  @Column({})
+  @Column()
   url: string;
 
-  @Column({})
-  time_stamp: string;
+  @Column()
+  viewCount: number;
 
-  @Column({})
-  view: number;
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @ManyToOne(type => Course, course => course.videos)
+  course: Course;
 }

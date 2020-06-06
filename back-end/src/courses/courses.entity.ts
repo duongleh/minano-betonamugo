@@ -1,30 +1,37 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne, JoinColumn, CreateDateColumn, ManyToOne } from 'typeorm';
+import { User } from '../users/users.entity';
+import { Video } from '../videos/videos.entity';
 import { Enrollment } from '../enrollments/enrollments.entity';
-import { Video } from 'src/videos/videos.entity';
 
 @Entity()
 export class Course {
-  @PrimaryGeneratedColumn({})
-  courseId: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ nullable: true })
-  ownerx: number;
-
-  @Column({ nullable: false })
+  @Column()
   name: string;
 
-  @Column({})
+  @Column()
+  title: string;
+
+  @Column()
   description: string;
 
-  @Column({})
+  @Column()
   thumbnail: string;
 
-  @Column({})
-  views: number;
+  @Column()
+  viewCount: number;
 
-  @OneToMany(() => Enrollment, (enrollment) => enrollment.courseId)
-  public enrollment: Enrollment
+  @CreateDateColumn()
+  createdAt: Date;
 
-  @OneToMany(() => Video, (video) => video.courseId)
-  public video: Video
+  @OneToMany(type => Video, video => video.course)
+  videos: Video[];
+
+  @OneToMany(type => Enrollment, enrollment => enrollment.course)
+  enrollments: Enrollment[];
+
+  @ManyToOne(type => User, user => user.courses)
+  owner: User;
 }
