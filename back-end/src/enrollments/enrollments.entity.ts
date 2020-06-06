@@ -1,22 +1,22 @@
-import { Entity, Column,PrimaryGeneratedColumn , ManyToOne } from 'typeorm';
-import { User } from '../users/users.entity'
-import { Course } from '../courses/courses.entity'
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { User } from '../users/users.entity';
+import { Course } from '../courses/courses.entity';
 
 @Entity()
 export class Enrollment {
   @PrimaryGeneratedColumn({})
-  enrollment : number
+  enrollment: number;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   userId: number;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   courseId: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   rate: number;
 
-  @Column({nullable: false})
+  @Column({ nullable: false })
   password: string;
 
   @Column({})

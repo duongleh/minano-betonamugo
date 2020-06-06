@@ -1,14 +1,14 @@
-import { Entity, Column,PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Video {
   @PrimaryGeneratedColumn({})
-  videoId : number
+  videoId: number;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   courseId: number;
 
-  @Column({nullable: false})
+  @Column({ nullable: false })
   title: string;
 
   @Column({})
@@ -18,5 +18,5 @@ export class Video {
   time_stamp: string;
 
   @Column({})
-  view: number
+  view: number;
 }

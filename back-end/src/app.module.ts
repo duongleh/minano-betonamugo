@@ -8,13 +8,7 @@ import { CoursesModule } from './courses/courses.module';
 import { VideosModule } from './videos/videos.module';
 
 @Module({
-  imports: [
-     TypeOrmModule.forRoot(),
-     UsersModule,
-     EnrollmentsModule,
-     CoursesModule,
-     VideosModule,
-  ],
+  imports: [TypeOrmModule.forRoot(), UsersModule, EnrollmentsModule, CoursesModule, VideosModule],
   controllers: [AppController],
   providers: [AppService]
 })

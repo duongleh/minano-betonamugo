@@ -1,16 +1,16 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Enrollment } from "../enrollments/enrollments.entity"
+import { Enrollment } from '../enrollments/enrollments.entity';
 import { Video } from 'src/videos/videos.entity';
 
 @Entity()
 export class Course {
   @PrimaryGeneratedColumn({})
-  courseId : number
+  courseId: number;
 
-  @Column({nullable: true})
-  owner: number;
+  @Column({ nullable: true })
+  ownerx: number;
 
-  @Column({nullable: false})
+  @Column({ nullable: false })
   name: string;
 
   @Column({})
