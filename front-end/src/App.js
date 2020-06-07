@@ -18,7 +18,7 @@ function App() {
           <Header>
             <HeaderNav />
           </Header>
-          <Content className='min_height'>
+          <Content className='min_height container'>
             <Router />
           </Content>
           <Footer>
