@@ -7,10 +7,10 @@
   "database": "minano_betonamugo",
   "entities": ["dist/**/*.entity{.ts,.js}"],
   "migrations": [
-    "src/migration/*.ts"
+    "migration/*.ts"
   ],
   "cli": {
-    "migrationsDir": "src/migration"
+    "migrationsDir": "migration"
   },
   "synchronize": false
 }
