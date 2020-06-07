@@ -1,4 +1,4 @@
-import * as actions from 'actions/UI';
+import * as actions from 'actions/UIAction';
 
 const initialState = {
   MenuKey: null
