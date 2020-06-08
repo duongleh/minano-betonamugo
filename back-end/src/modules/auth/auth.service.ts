@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UserRepository } from '../users/users.repository';
-import { AuthDto } from './auth.dto';
+import { SignUpDto, SignInDto } from './auth.dto';
 import { JwtPayload } from './jwt-payload.model';
 
 @Injectable()
@@ -14,16 +14,16 @@ export class AuthService {
     private jwtService: JwtService
   ) { }
 
-  async signUp(authDto: AuthDto): Promise<void> {
-    const { email, password } = authDto;
+  async signUp(signUpDto: SignUpDto): Promise<void> {
+    const { name, email, password } = signUpDto;
 
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
-    return this.userRepository.createNewUser(email, hashedPassword, salt);
+    return this.userRepository.createNewUser(name, email, hashedPassword, salt);
   }
 
-  async signIn(authDto: AuthDto): Promise<{ accessToken: string }> {
-    const { email, password } = authDto;
+  async signIn(signInDto: SignInDto): Promise<{ accessToken: string }> {
+    const { email, password } = signInDto;
 
     const foundUser = await this.userRepository.findOne({ email });
     if (!foundUser) throw new UnauthorizedException('Invalid Credentials');

@@ -6,8 +6,9 @@ import { User } from './users.entity';
 export class UserRepository extends Repository<User> {
   private logger = new Logger();
 
-  async createNewUser(email: string, password: string, salt: string): Promise<void> {
+  async createNewUser(name: string, email: string, password: string, salt: string): Promise<void> {
     const user = new User();
+    user.name = name;
     user.email = email;
     user.salt = salt;
     user.password = password;

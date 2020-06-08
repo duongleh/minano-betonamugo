@@ -7,7 +7,7 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ default: null })
+  @Column()
   name: string;
 
   @Column({ unique: true })
@@ -25,7 +25,7 @@ export class User extends BaseEntity {
   @Column({ default: false })
   isBlock: boolean;
 
-  @Column({ default: null })
+  @Column({ default: false })
   role: boolean;
 
   @CreateDateColumn()
