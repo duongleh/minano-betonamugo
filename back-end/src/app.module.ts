@@ -1,13 +1,20 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from './users/users.module';
-import { EnrollmentsModule } from './enrollments/enrollments.module';
-import { CoursesModule } from './courses/courses.module';
-import { VideosModule } from './videos/videos.module';
+import { UsersModule } from './modules/users/users.module';
+import { EnrollmentsModule } from './modules/enrollments/enrollments.module';
+import { CoursesModule } from './modules/courses/courses.module';
+import { VideosModule } from './modules/videos/videos.module';
+import * as morgan from 'morgan';
 
 @Module({
   imports: [TypeOrmModule.forRoot(), UsersModule, EnrollmentsModule, CoursesModule, VideosModule],
   controllers: [],
   providers: []
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(morgan('dev'))
+      .forRoutes('*');
+  }
+}
