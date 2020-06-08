@@ -5,7 +5,7 @@ import { Course } from '../courses/courses.entity';
 export class Video {
   @PrimaryGeneratedColumn()
   id: number;
-  
+
   @Column()
   title: string;
 
@@ -17,6 +17,9 @@ export class Video {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @Column()
+  courseId: number;
 
   @ManyToOne(type => Course, course => course.videos)
   course: Course;

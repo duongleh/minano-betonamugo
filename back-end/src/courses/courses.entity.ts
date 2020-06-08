@@ -26,12 +26,15 @@ export class Course {
   @CreateDateColumn()
   createdAt: Date;
 
+  @Column()
+  ownerId: number;
+
+  @ManyToOne(type => User, user => user.courses)
+  owner: User;
+
   @OneToMany(type => Video, video => video.course)
   videos: Video[];
 
   @OneToMany(type => Enrollment, enrollment => enrollment.course)
   enrollments: Enrollment[];
-
-  @ManyToOne(type => User, user => user.courses)
-  owner: User;
 }

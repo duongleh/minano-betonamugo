@@ -19,6 +19,12 @@ export class Enrollment {
   @CreateDateColumn()
   createdAt: Date;
 
+  @Column()
+  userId: number;
+
+  @Column()
+  courseId: number;
+
   @ManyToOne(type => User, user => user.enrollments)
   user: User;
 
