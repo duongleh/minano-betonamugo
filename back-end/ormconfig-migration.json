@@ -5,7 +5,7 @@
   "username": "root",
   "password": "123456",
   "database": "minano_betonamugo",
-  "entities": ["dist/**/*.entity{.ts,.js}"],
+  "entities": ["dist/src/modules/**/*.entity{.ts,.js}"],
   "migrations": [
     "migration/*.ts"
   ],

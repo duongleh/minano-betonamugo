@@ -1,9 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, BaseEntity } from 'typeorm';
 import { Course } from '../courses/courses.entity';
 import { Enrollment } from '../enrollments/enrollments.entity';
 
 @Entity()
-export class User {
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -17,15 +17,15 @@ export class User {
   password: string;
 
   @Column()
-  token: string;
+  salt: string;
 
-  @Column()
+  @Column({ default: null })
   avatar: string;
 
-  @Column()
+  @Column({ default: false })
   isBlock: boolean;
 
-  @Column()
+  @Column({ default: false })
   role: boolean;
 
   @CreateDateColumn()
