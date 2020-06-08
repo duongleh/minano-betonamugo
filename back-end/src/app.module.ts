@@ -4,10 +4,11 @@ import { UsersModule } from './modules/users/users.module';
 import { EnrollmentsModule } from './modules/enrollments/enrollments.module';
 import { CoursesModule } from './modules/courses/courses.module';
 import { VideosModule } from './modules/videos/videos.module';
+import { AuthModule } from './modules/auth/auth.module';
 import * as morgan from 'morgan';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), UsersModule, EnrollmentsModule, CoursesModule, VideosModule],
+  imports: [TypeOrmModule.forRoot(), UsersModule, EnrollmentsModule, CoursesModule, VideosModule, AuthModule],
   controllers: [],
   providers: []
 })
