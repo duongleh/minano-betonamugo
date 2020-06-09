@@ -17,7 +17,7 @@ export class UserRepository extends Repository<User> {
       await user.save();
     } catch (error) {
       this.logger.error(error.message);
-      if (error.code === 'ER_DUP_ENTRY') {
+      if (error.code === '23505') {
         throw new ConflictException('Email already exists');
       } else {
         throw new InternalServerErrorException();
