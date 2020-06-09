@@ -2,10 +2,11 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Menu, Col, Row } from 'antd';
-import './header.css';
+import './index.css';
 
 function HeaderNav() {
   const UI = useSelector((state) => state.UI);
+  const LoginStatus = useSelector((state) => state.LoginStatus);
 
   return (
     <div style={{ width: '100%' }}>
@@ -19,16 +20,20 @@ function HeaderNav() {
             </Menu>
           </Col>
           <Col>
-            <Row>
-              <Menu theme='dark' mode='horizontal' defaultSelectedKeys={[UI.MenuKey]}>
-                <Menu.Item key='2'>
-                  <Link to='/signup'>SignUp</Link>
-                </Menu.Item>
-                <Menu.Item key='3'>
-                  <Link to='/signin'>SignIn</Link>
-                </Menu.Item>
-              </Menu>
-            </Row>
+            {LoginStatus.isLogin ? (
+              <Col className='usename'>{LoginStatus.name}</Col>
+            ) : (
+              <Row>
+                <Menu theme='dark' mode='horizontal' defaultSelectedKeys={[UI.MenuKey]}>
+                  <Menu.Item key='2'>
+                    <Link to='/signup'>SignUp</Link>
+                  </Menu.Item>
+                  <Menu.Item key='3'>
+                    <Link to='/signin'>SignIn</Link>
+                  </Menu.Item>
+                </Menu>
+              </Row>
+            )}
           </Col>
         </Row>
       ) : (

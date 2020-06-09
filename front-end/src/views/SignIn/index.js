@@ -1,12 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as UI from 'actions/UIAction';
+import axios from 'axios';
 
 import './index.css';
 
 function SignIn() {
   const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [msg, setMsg] = useState('');
 
   useEffect(() => {
     dispatch(UI.updateMenuKey(2));
@@ -16,7 +20,21 @@ function SignIn() {
     event.preventDefault();
     const data = new FormData(event.target);
 
-    console.log(data);
+    setEmail(data.get('email'));
+    setPassword(data.get('password'));
+
+    await axios
+      .post('http://localhost:4000/api/v1/auth/signin', {
+        email,
+        password
+      })
+      .then((res) => {
+        localStorage.setItem('token', res.data.accessToken);
+        window.location.href = '/';
+      })
+      .catch((error) => {
+        setMsg(error.response.data.message[0]);
+      });
   };
 
   return (
@@ -56,6 +74,8 @@ function SignIn() {
             <h2 className='signup1'>Sign In</h2>
 
             <form className='form logon' onSubmit={handleSubmit}>
+              {msg ? <p className='colorError'>{msg}</p> : <></>}
+
               <input className='input ' id='email' name='email' type='text' placeholder='Email*' />
 
               <input

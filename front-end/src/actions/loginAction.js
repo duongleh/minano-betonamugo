@@ -7,14 +7,13 @@ export const login = (token) => async (dispatch) => {
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 
   await axios
-    .get('api check oauth')
+    .get('http://localhost:4000/api/v1/auth/verify')
     .then((response) => {
       // handle success
       dispatch({
         type: LOGIN,
         isLogin: true,
         name: response.data.name,
-        position: response.data.position,
         token
       });
       dispatch({
