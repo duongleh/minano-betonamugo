@@ -31,7 +31,7 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(password, foundUser.salt);
     if (hashedPassword !== foundUser.password) throw new UnauthorizedException('Invalid Credentials');
 
-    const payload: JwtPayload = { name: foundUser.name, email };
+    const payload: JwtPayload = { name: foundUser.name, email, role: foundUser.role };
     const accessToken = this.jwtService.sign(payload);
     return { accessToken };
   }
