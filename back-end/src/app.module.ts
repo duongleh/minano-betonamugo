@@ -13,9 +13,7 @@ import * as morgan from 'morgan';
   providers: []
 })
 export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(morgan('dev'))
-      .forRoutes('*');
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(morgan('dev')).forRoutes('*');
   }
 }

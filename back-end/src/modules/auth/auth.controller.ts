@@ -9,7 +9,7 @@ import { JwtPayload } from './jwt-payload.model';
 @ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
   @Post('/signup')
   signUp(@Body() signUpDto: SignUpDto): Promise<void> {
