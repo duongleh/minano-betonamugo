@@ -9,10 +9,7 @@ async function bootstrap() {
   app.setGlobalPrefix('/api/v1');
   app.useGlobalPipes(new ValidationPipe());
 
-  const options = new DocumentBuilder()
-    .setTitle('minano-betonamugo API v1')
-    .addBearerAuth()
-    .build();
+  const options = new DocumentBuilder().setTitle('minano-betonamugo API v1').addBearerAuth().build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('/', app, document);
 
