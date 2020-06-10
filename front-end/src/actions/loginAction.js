@@ -17,11 +17,13 @@ export const login = (token) => async (dispatch) => {
         role: response.data.role,
         token
       });
+
+      if (response.data.role === true) localStorage.removeItem('token');
+
       dispatch({
         type: ISLOADING,
         isLoading: false
       });
-      if (response.data.role === true) window.location.href = 'http://localhost:3030';
     })
     .catch((error) => {
       // handle error
