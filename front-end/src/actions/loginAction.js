@@ -14,6 +14,7 @@ export const login = (token) => async (dispatch) => {
         type: LOGIN,
         isLogin: true,
         name: response.data.name,
+        role: response.data.role,
         token
       });
       dispatch({
