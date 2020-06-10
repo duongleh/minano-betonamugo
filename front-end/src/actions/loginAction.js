@@ -21,6 +21,7 @@ export const login = (token) => async (dispatch) => {
         type: ISLOADING,
         isLoading: false
       });
+      if (response.data.role === true) window.location.href = 'http://localhost:3030';
     })
     .catch((error) => {
       // handle error
