@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3'
 
 services:
   back-end:
@@ -36,7 +36,7 @@ services:
     container_name: 'postgres'
     restart: always
     environment:
-      POSTGRES_DATABASE: minano-betonamugo
+      POSTGRES_DATABASE: minano_betonamugo
       POSTGRES_USER: root
       POSTGRES_PASSWORD: '123456'
     tty: true

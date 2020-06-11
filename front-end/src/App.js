@@ -17,14 +17,14 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const getAddress = () => {
+    const verifyToken = () => {
       var token;
       window.addEventListener('load', () => {
         if ((token = localStorage.getItem('token'))) store.dispatch(loginAction.login(token));
         else store.dispatch(loginAction.isloading());
       });
     };
-    getAddress();
+    verifyToken();
   }, [dispatch]);
 
   return (
