@@ -14,17 +14,10 @@ function SignUp() {
   const [msg, setMsg] = useState('');
 
   useEffect(() => {
-    dispatch(UI.updateMenuKey(3));
+    dispatch(UI.updateMenuKey(2));
   }, [dispatch]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const data = new FormData(event.target);
-
-    setName(data.get('name'));
-    setEmail(data.get('email'));
-    setPassword(data.get('password'));
-
+  const handleSubmit = async () => {
     await axios
       .post('http://localhost:4000/api/v1/auth/signup', {
         email,
@@ -93,9 +86,17 @@ function SignUp() {
                   name='name'
                   type='text'
                   placeholder='Full name*'
+                  onChange={(event) => setName(event.target.value)}
                 />
 
-                <input className='input' id='email' name='email' type='text' placeholder='email*' />
+                <input
+                  className='input'
+                  id='email'
+                  name='email'
+                  type='text'
+                  placeholder='email*'
+                  onChange={(event) => setEmail(event.target.value)}
+                />
 
                 <input
                   className='input'
@@ -103,6 +104,7 @@ function SignUp() {
                   name='password'
                   type='password'
                   placeholder='Password*'
+                  onChange={(event) => setPassword(event.target.value)}
                 />
                 <button className='button'>Submit</button>
               </form>

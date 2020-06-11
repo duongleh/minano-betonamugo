@@ -13,16 +13,10 @@ function SignIn() {
   const [msg, setMsg] = useState('');
 
   useEffect(() => {
-    dispatch(UI.updateMenuKey(2));
+    dispatch(UI.updateMenuKey(3));
   }, [dispatch]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const data = new FormData(event.target);
-
-    setEmail(data.get('email'));
-    setPassword(data.get('password'));
-
+  const handleSubmit = async () => {
     await axios
       .post('http://localhost:4000/api/v1/auth/signin', {
         email,
@@ -76,7 +70,14 @@ function SignIn() {
             <form className='form logon' onSubmit={handleSubmit}>
               {msg ? <p className='colorError'>{msg}</p> : <></>}
 
-              <input className='input ' id='email' name='email' type='text' placeholder='Email*' />
+              <input
+                className='input'
+                id='email'
+                name='email'
+                type='text'
+                placeholder='Email*'
+                onChange={(event) => setEmail(event.target.value)}
+              />
 
               <input
                 className='input '
@@ -84,6 +85,7 @@ function SignIn() {
                 name='password'
                 type='password'
                 placeholder='Password*'
+                onChange={(event) => setPassword(event.target.value)}
               />
               <button className='button'>Submit</button>
             </form>
