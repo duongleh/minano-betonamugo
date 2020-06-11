@@ -32,8 +32,7 @@ function SignUp() {
         name
       })
       .then((res) => {
-        console.log(res);
-        window.location.href = '/login';
+        window.location.href = '/signin';
       })
       .catch((error) => {
         setMsg(error.response.data.message[0]);
