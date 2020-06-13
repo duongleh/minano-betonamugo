@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as loginAction from 'actions/loginAction';
 import { BrowserRouter } from 'react-router-dom';
 import Router from './router';
@@ -10,11 +10,13 @@ import FooterNav from './components/Footer';
 
 import { Layout } from 'antd';
 import './App.css';
+import LoadingPage from 'views/LoadingPage';
 
 const { Header, Content, Footer } = Layout;
 
 function App() {
   const dispatch = useDispatch();
+  const LoginStatus = useSelector((state) => state.LoginStatus);
 
   useEffect(() => {
     const verifyToken = () => {
@@ -30,17 +32,21 @@ function App() {
   return (
     <div className='App'>
       <BrowserRouter>
-        <Layout>
-          <Header>
-            <HeaderNav />
-          </Header>
-          <Content className='min_height container'>
-            <Router />
-          </Content>
-          <Footer>
-            <FooterNav />
-          </Footer>
-        </Layout>
+        {LoginStatus.isLoading ? (
+          <LoadingPage />
+        ) : (
+          <Layout>
+            <Header>
+              <HeaderNav />
+            </Header>
+            <Content className='min_height container'>
+              <Router />
+            </Content>
+            <Footer>
+              <FooterNav />
+            </Footer>
+          </Layout>
+        )}
       </BrowserRouter>
     </div>
   );

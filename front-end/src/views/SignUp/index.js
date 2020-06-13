@@ -18,6 +18,7 @@ function SignUp() {
   }, [dispatch]);
 
   const handleSubmit = async () => {
+    console.log(email);
     await axios
       .post('http://localhost:4000/api/v1/auth/signup', {
         email,
@@ -78,7 +79,7 @@ function SignUp() {
           <div className='c2'>
             <div className='form_box'>
               <h2 className='signup1'>Sign Up</h2>
-              <form className='form logon' onSubmit={handleSubmit}>
+              <div className='form logon'>
                 {msg ? <p className='colorError'>{msg}</p> : <></>}
                 <input
                   className='input'
@@ -106,8 +107,10 @@ function SignUp() {
                   placeholder='Password*'
                   onChange={(event) => setPassword(event.target.value)}
                 />
-                <button className='button'>Submit</button>
-              </form>
+                <button className='button' onClick={() => handleSubmit()}>
+                  Submit
+                </button>
+              </div>
             </div>
           </div>
         </div>

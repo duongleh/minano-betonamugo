@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Row, Col } from 'antd';
 import CourseCard from 'components/Card';
 
@@ -10,7 +11,9 @@ function ListCourse() {
       <Row gutter={[16, 24]}>
         {courses.map((course) => (
           <Col className='gutter-row' key={course} span={6}>
-            <CourseCard />
+            <Link to={`/course/${course}`}>
+              <CourseCard />
+            </Link>
           </Col>
         ))}
       </Row>
