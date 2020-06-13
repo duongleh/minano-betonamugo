@@ -20,6 +20,7 @@ function Router() {
       {LoginStatus.isLogin ? (
         <Switch>
           <Route path='/course/:id' component={Course} />
+          <Route path='*' exact={true} component={Page404} />
         </Switch>
       ) : (
         <></>

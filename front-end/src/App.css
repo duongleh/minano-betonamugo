@@ -5,6 +5,10 @@
   min-height: 80vh !important;
 }
 
+.bg_w {
+  background-color: white;
+}
+
 .tl {
   text-align: left;
 }
