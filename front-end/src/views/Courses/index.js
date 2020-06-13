@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Typography, Row, Col, Card, Button } from 'antd';
+import { Link, useParams } from 'react-router-dom';
 
 import './index.css';
 import Carou from 'components/Carousel';
@@ -9,6 +10,8 @@ import Review from 'components/Review';
 const { Paragraph } = Typography;
 
 function Course() {
+  const { id } = useParams();
+
   const [course] = useState({
     title: 'Bai hoc vo long',
     description:
@@ -55,7 +58,9 @@ function Course() {
             bordered={false}
             style={{ width: '100%', boxShadow: '5px 8px 24px 5px rgba(208, 216, 243, 0.6)' }}
           >
-            <Button type='danger'>Ngay luôn chứ gì nữa</Button>
+            <Link to={`/video/${id}`}>
+              <Button type='danger'>Ngay luôn chứ gì nữa</Button>
+            </Link>
           </Card>
         </Col>
       </Row>

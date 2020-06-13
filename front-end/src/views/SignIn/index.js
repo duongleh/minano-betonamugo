@@ -27,10 +27,7 @@ function SignIn() {
         window.location.href = '/';
       })
       .catch((error) => {
-        console.log(error.response);
-        if (typeof error.response.data.message[0] !== 'string')
-          setMsg(error.response.data.message[0]);
-        else setMsg(error.response.data.message);
+        setMsg(error.response.data.message);
       });
   };
 
