@@ -12,7 +12,7 @@ export class Video {
   @Column()
   url: string;
 
-  @Column()
+  @Column({default: 0})
   viewCount: number;
 
   @CreateDateColumn()

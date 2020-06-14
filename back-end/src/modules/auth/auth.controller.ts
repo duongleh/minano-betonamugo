@@ -25,6 +25,6 @@ export class AuthController {
   @UseGuards(AuthGuard())
   @Get('verify')
   validateToken(@GetUser() user: JwtPayload): JwtPayload {
-    return user;
+    return { name: user.name, email: user.email, role: user.role };
   }
 }

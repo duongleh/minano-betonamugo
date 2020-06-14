@@ -1,4 +1,4 @@
-import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer, Logger } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './modules/users/users.module';
 import { EnrollmentsModule } from './modules/enrollments/enrollments.module';
@@ -10,10 +10,14 @@ import * as morgan from 'morgan';
 @Module({
   imports: [TypeOrmModule.forRoot(), UsersModule, EnrollmentsModule, CoursesModule, VideosModule, AuthModule],
   controllers: [],
-  providers: []
+  providers: [Logger]
 })
 export class AppModule implements NestModule {
+  constructor(private logger: Logger) {}
+
   configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(morgan('dev')).forRoutes('*');
+    consumer
+      .apply(morgan('dev', { stream: { write: (message) => this.logger.log(message.substring(0, message.lastIndexOf('\n'))) } }))
+      .forRoutes('*');
   }
 }
