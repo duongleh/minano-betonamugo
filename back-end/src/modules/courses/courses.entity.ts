@@ -20,7 +20,7 @@ export class Course {
   @Column()
   thumbnail: string;
 
-  @Column()
+  @Column({ default: 0 })
   viewCount: number;
 
   @CreateDateColumn()
