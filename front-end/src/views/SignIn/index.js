@@ -27,7 +27,7 @@ function SignIn() {
         window.location.href = '/';
       })
       .catch((error) => {
-        setMsg(error.response.data.message[0]);
+        setMsg(error.response.data.message);
       });
   };
 
@@ -67,7 +67,7 @@ function SignIn() {
           <div className='c2'>
             <h2 className='signup1'>Sign In</h2>
 
-            <form className='form logon' onSubmit={handleSubmit}>
+            <div className='form logon'>
               {msg ? <p className='colorError'>{msg}</p> : <></>}
 
               <input
@@ -87,8 +87,10 @@ function SignIn() {
                 placeholder='Password*'
                 onChange={(event) => setPassword(event.target.value)}
               />
-              <button className='button'>Submit</button>
-            </form>
+              <button className='button' onClick={() => handleSubmit()}>
+                Submit
+              </button>
+            </div>
           </div>
         </div>
       </div>
