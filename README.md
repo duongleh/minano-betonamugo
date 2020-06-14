@@ -8,7 +8,7 @@
 
 ## Run
 
-### install package
+### Install packages
 
 **back-end**
 ```
@@ -23,16 +23,9 @@ yarn
 docker-compose up
 ```
 
-### migate database
+### Migration
 ```
-docker-compose exec mysql mysql -u root -p
-
-===============
-/// password
-123456
-
-===============
-create database minano_betonamugo
+docker-compose exec back-end yarn migration:run
 ```
 
 ### Down
@@ -40,7 +33,7 @@ create database minano_betonamugo
 docker-compose down
 ```
 
-### view logs
+### View logs
 ```
 // for back-end
 docker logs -f back-end
