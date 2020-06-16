@@ -24,11 +24,16 @@ function Login() {
     await axios
       .post('http://localhost:4000/api/v1/auth/signin', values)
       .then((res) => {
-        localStorage.setItem('token', res.data.accessToken);
-        window.location.href = '/';
+        const credentials = JSON.parse(atob(res.data.accessToken.split('.')[1]));
+        if (!credentials.role) {
+          window.alert('You shall not pass');
+        } else {
+          localStorage.setItem('token', res.data.accessToken);
+          window.location.href = '/';
+        }
       })
       .catch((error) => {
-        console.log(error);
+        window.alert(error.response.data.message);
       });
   };
 
