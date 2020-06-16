@@ -27,7 +27,7 @@ export const ListCourse = (props) => (
 );
 
 export const CourseCreate = (props) => (
-  <Create {...props} title='コース作成'>
+  <Create {...props} title='コース作成' redirect='show'>
     <SimpleForm>
       <TextInput label='Name' source='name' />
       <TextInput label='Title' source='title' />
@@ -39,7 +39,7 @@ export const CourseCreate = (props) => (
 
 export const CourseEdit = (props) => {
   return (
-    <Edit {...props}>
+    <Edit {...props} redirect='show'>
       <SimpleForm>
         <TextInput label='Name' source='name' />
         <TextInput label='Title' source='title' />
