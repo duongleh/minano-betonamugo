@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fusionworks/ra-data-nest-crud": "^1.0.8",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "axios": "^0.19.2",
     "antd": "^4.1.1",
+    "axios": "^0.19.2",
     "prop-types": "^15.7.2",
     "ra-data-json-server": "^3.6.0",
     "react": "^16.13.1",

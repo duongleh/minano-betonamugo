@@ -1,42 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { Admin, Resource, ListGuesser } from 'react-admin';
-import jsonServerProvider from 'ra-data-json-server';
-import axios from 'axios';
-import Login from 'views/Login';
+import React from 'react';
+import { fetchUtils, Admin, Resource } from 'react-admin';
+import crudProvider from '@fusionworks/ra-data-nest-crud';
+import { ListCourse, CourseCreate, CourseEdit } from './Courses';
+import authProvider from './Providers/authProvider';
+import Login from './views/Login';
 
-const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
+const httpClient = (url, options = {}) => {
+  if (!options.headers) {
+    options.headers = new Headers({ Accept: 'application/json' });
+  }
+  const token = localStorage.getItem('token');
+  options.headers.set('Authorization', `Bearer ${token}`);
+  return fetchUtils.fetchJson(url, options);
+};
+
+const dataProvider = crudProvider('http://localhost:4000/api/v1', httpClient);
+
 const App = () => {
-  const [isLogin, setIsLogin] = useState(false);
-
-  useEffect(() => {
-    const verifyToken = () => {
-      var token;
-      window.addEventListener('load', async () => {
-        if ((token = localStorage.getItem('token'))) {
-          axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-
-          await axios.get('http://localhost:4000/api/v1/auth/verify').then((response) => {
-            console.log(response.data);
-            if (response.data.role) {
-              setIsLogin(true);
-            }
-          });
-        } else localStorage.removeItem('token');
-      });
-    };
-    verifyToken();
-  }, []);
-
   return (
-    <div>
-      {isLogin ? (
-        <Admin dataProvider={dataProvider}>
-          <Resource name='users' list={ListGuesser} />
-        </Admin>
-      ) : (
-        <Login />
-      )}
-    </div>
+    <Admin loginPage={Login} authProvider={authProvider} dataProvider={dataProvider}>
+      {/* <Resource name='users' list={ListGuesser} /> */}
+      <Resource name='courses' list={ListCourse} edit={CourseEdit} create={CourseCreate} />
+    </Admin>
   );
 };
 
