@@ -1,5 +1,5 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { IsString, IsNumber, IsDefined } from 'class-validator';
+import { IsString, IsNumber, IsDefined, IsUrl } from 'class-validator';
 
 export class CreateVideoDto {
   @ApiProperty()
@@ -9,7 +9,7 @@ export class CreateVideoDto {
 
   @ApiProperty()
   @IsDefined()
-  @IsString()
+  @IsUrl()
   url: string;
 
   @ApiProperty()
