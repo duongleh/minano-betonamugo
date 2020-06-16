@@ -1,5 +1,5 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { IsString, IsDefined } from 'class-validator';
+import { IsString, IsDefined, IsUrl } from 'class-validator';
 
 export class CreateCourseDto {
   @ApiProperty()
@@ -19,7 +19,7 @@ export class CreateCourseDto {
 
   @ApiProperty()
   @IsDefined()
-  @IsString()
+  @IsUrl()
   thumbnail: string;
 }
 
