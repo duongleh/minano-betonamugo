@@ -18,7 +18,6 @@ function SignUp() {
   }, [dispatch]);
 
   const handleSubmit = async () => {
-    console.log(email);
     await axios
       .post('http://localhost:4000/api/v1/auth/signup', {
         email,

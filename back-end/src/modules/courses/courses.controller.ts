@@ -11,13 +11,13 @@ import { RolesGuard } from '../../shared/Guards/roles.guard';
 
 @ApiTags('Courses')
 @ApiBearerAuth()
-@UseGuards(AuthGuard())
+// @UseGuards(AuthGuard())
 @Crud({
   model: { type: Course },
   routes: {
     exclude: ['createManyBase', 'replaceOneBase'],
-    updateOneBase: { decorators: [UseGuards(RolesGuard)] },
-    deleteOneBase: { decorators: [UseGuards(RolesGuard)] }
+    updateOneBase: { decorators: [UseGuards(AuthGuard(),RolesGuard)] },
+    deleteOneBase: { decorators: [UseGuards(AuthGuard(),RolesGuard)] }
   },
   dto: {
     create: CreateCourseDto,
@@ -29,7 +29,7 @@ export class CoursesController implements CrudController<Course> {
   constructor(public service: CoursesService) {}
 
   @Override()
-  @UseGuards(RolesGuard)
+  @UseGuards(AuthGuard(),RolesGuard)
   createOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: CreateCourseDto, @GetUser() user: User): Promise<Course> {
     return this.service.createOne(req, { ...dto, ownerId: user.id });
   }
