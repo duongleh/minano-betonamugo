@@ -43,3 +43,14 @@ export const isloading = () => async (dispatch) => {
     isLoading: false
   });
 };
+
+export const logout = () => async (dispatch) => {
+  localStorage.removeItem('token');
+  dispatch({
+    type: LOGIN,
+    isLogin: false,
+    name: '',
+    token: ''
+  });
+  window.location.href = '/';
+};
