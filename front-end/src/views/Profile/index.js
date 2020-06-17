@@ -21,7 +21,7 @@ function Profile() {
 
       <ListCourse title='Participating Courses' />
 
-      <ListCourse title='Completed Course' />
+      <ListCourse title='Completed Course' isCertificate={true} />
     </div>
   );
 }

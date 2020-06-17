@@ -43,9 +43,9 @@ function HeaderNav() {
               <Col className='usename mgr_10'>{LoginStatus.name}</Col>
               <Col>
                 <Dropdown overlay={menu}>
-                  <a className='ant-dropdown-link' onClick={(e) => e.preventDefault()}>
+                  <div className='ant-dropdown-link cl_w' onClick={(e) => e.preventDefault()}>
                     <DownOutlined />
-                  </a>
+                  </div>
                 </Dropdown>
               </Col>
               ,

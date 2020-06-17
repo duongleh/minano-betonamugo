@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Row, Col } from 'antd';
 import CourseCard from 'components/Card';
 
-function ListCourse({ title }) {
+function ListCourse({ title, isCertificate }) {
   const [courses] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
   return (
     <div>
@@ -11,9 +11,15 @@ function ListCourse({ title }) {
       <Row gutter={[16, 24]}>
         {courses.map((course) => (
           <Col className='gutter-row' key={course} span={6}>
-            <Link to={`/course/${course}`}>
-              <CourseCard />
-            </Link>
+            {!!isCertificate ? (
+              <Link to={`/certificate/${course}`}>
+                <CourseCard />
+              </Link>
+            ) : (
+              <Link to={`/course/${course}`}>
+                <CourseCard />
+              </Link>
+            )}
           </Col>
         ))}
       </Row>
