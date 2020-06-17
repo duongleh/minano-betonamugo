@@ -4,25 +4,20 @@ import { Rate, Card, Avatar } from 'antd';
 import './index.css';
 const { Meta } = Card;
 
-function CourseCard() {
+function CourseCard({ courseDetail }) {
   return (
     <Card
       span={6}
-      cover={
-        <img
-          alt='example'
-          src='https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'
-        />
-      }
+      cover={<img className='card_image_size' alt='example' src={courseDetail.thumbnail} />}
     >
       <Meta
         avatar={<Avatar src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />}
-        title='Card title'
-        description='This is the description'
+        title={courseDetail.title}
+        description={courseDetail.description}
       />
 
       <div className='space rate'>
-        <Rate allowHalf defaultValue={2.5} />
+        <Rate allowHalf defaultValue={0} />
       </div>
     </Card>
   );

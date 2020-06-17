@@ -1,3 +1,8 @@
 .space {
   margin-top: 10px;
 }
+
+.card_image_size {
+  height: 182px;
+  width: 273px;
+}

@@ -1,27 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'antd';
 import CourseCard from 'components/Card';
+import axios from 'axios';
 
 function ListCourse({ title, isCertificate }) {
-  const [courses] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
+  const [courses, setCourses] = useState(null);
+
+  useEffect(() => {
+    const fetchCourse = async () => {
+      const course = await axios.get('http://localhost:4000/api/v1/courses');
+      setCourses(course.data);
+    };
+    fetchCourse();
+  }, []);
+
   return (
     <div>
       <h1 className='tl'>{title}</h1>
       <Row gutter={[16, 24]}>
-        {courses.map((course) => (
-          <Col className='gutter-row' key={course} span={6}>
-            {!!isCertificate ? (
-              <Link to={`/certificate/${course}`}>
-                <CourseCard />
-              </Link>
-            ) : (
-              <Link to={`/course/${course}`}>
-                <CourseCard />
-              </Link>
-            )}
-          </Col>
-        ))}
+        {!!courses ? (
+          courses.map((course, index) => (
+            <Col className='gutter-row' key={index} span={6}>
+              {!!isCertificate ? (
+                <Link to={`/certificate/${course.id}`}>
+                  <CourseCard courseDetail={course} />
+                </Link>
+              ) : (
+                <Link to={`/course/${course.id}`}>
+                  <CourseCard courseDetail={course} />
+                </Link>
+              )}
+            </Col>
+          ))
+        ) : (
+          <></>
+        )}
       </Row>
     </div>
   );
