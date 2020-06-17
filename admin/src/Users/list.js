@@ -1,5 +1,5 @@
 import React from 'react';
-import { BooleanField, Datagrid, DateField, DeleteButton, List, TextField } from 'react-admin';
+import { BooleanField, Datagrid, DateField, List, TextField } from 'react-admin';
 import BlockButton from './BlockButton';
 
 const ListUser = (props) => {
