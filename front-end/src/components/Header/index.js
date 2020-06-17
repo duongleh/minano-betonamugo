@@ -34,7 +34,10 @@ function HeaderNav() {
             <Row>
               <Col className='mgr_10'>
                 <Link to='profile'>
-                  <Avatar src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />
+                  <Avatar
+                    style={{ backgroundColor: 'white' }}
+                    src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
+                  />
                 </Link>
               </Col>
               <Col className='usename mgr_10'>{LoginStatus.name}</Col>
