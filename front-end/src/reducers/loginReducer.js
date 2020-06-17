@@ -18,7 +18,6 @@ const loginReducer = (state = initialState, action) => {
         ...state,
         isLogin: action.isLogin,
         name: action.name,
-        position: action.position,
         token: action.token
       };
     case login.ISLOADING:

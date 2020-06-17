@@ -14,7 +14,7 @@ function Home() {
   return (
     <div>
       <Carou url='https://img-a.udemycdn.com/notices/home_banner/image_udlite/7cf844b2-4371-45ea-9ef5-e10ea212eac2.jpg' />
-      <ListCourse />
+      <ListCourse title='Top Course' />
     </div>
   );
 }

@@ -1,0 +1,8 @@
+.profile_cover {
+  position: relative;
+}
+
+.profile_avatar {
+  position: absolute;
+  top: -90px;
+}
