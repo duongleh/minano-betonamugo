@@ -18,6 +18,7 @@ class BlockButton extends Component {
         } else {
           showNotification('User unblocked');
         }
+        push('/users');
         setInterval(() => (window.location.href = '/users'), 2000);
       })
       .catch((e) => {
