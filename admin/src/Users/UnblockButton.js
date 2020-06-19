@@ -6,14 +6,14 @@ import { showNotification, UPDATE } from 'react-admin';
 import dataProvider from '../Providers/dataProvider';
 import { push } from 'react-router-redux';
 
-class BlockButton extends Component {
+class UnblockButton extends Component {
   handleClick = () => {
     const { push, record, showNotification } = this.props;
-    let updatedRecord = { ...record, isBlock: true };
+    let updatedRecord = { ...record, isBlock: false };
     updatedRecord.role = undefined;
     dataProvider(UPDATE, 'users', { id: record.id, data: updatedRecord })
       .then(() => {
-        showNotification('User blocked');
+        showNotification('User unblocked');
         push('/users');
         setInterval(() => (window.location.href = '/users'), 2000);
       })
@@ -24,14 +24,14 @@ class BlockButton extends Component {
 
   render() {
     return (
-      <Button onClick={this.handleClick} variant='outlined' color='secondary'>
-        Block
+      <Button onClick={this.handleClick} variant='outlined'>
+        Unblock
       </Button>
     );
   }
 }
 
-BlockButton.propTypes = {
+UnblockButton.propTypes = {
   push: PropTypes.func,
   record: PropTypes.object,
   showNotification: PropTypes.func,
@@ -40,4 +40,4 @@ BlockButton.propTypes = {
 export default connect(null, {
   showNotification,
   push,
-})(BlockButton);
+})(UnblockButton);
