@@ -1,5 +1,5 @@
 import { PassportStrategy } from '@nestjs/passport';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ForbiddenException } from '@nestjs/common';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { JwtPayload } from './jwt-payload.model';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -21,7 +21,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: JwtPayload): Promise<User> {
     const user = await this.userRepository.findOne({ email: payload.email });
-    if (!user || user.isBlock) throw new UnauthorizedException();
+    if (!user) throw new UnauthorizedException();
+    if (user.isBlock) throw new ForbiddenException('User has been banned!');
     return user;
   }
 }

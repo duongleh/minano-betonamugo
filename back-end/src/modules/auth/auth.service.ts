@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ForbiddenException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -27,6 +27,7 @@ export class AuthService {
 
     const foundUser = await this.userRepository.findOne({ email });
     if (!foundUser) throw new UnauthorizedException('Invalid Credentials');
+    if (foundUser.isBlock) throw new ForbiddenException('User has been banned!');
 
     const hashedPassword = await bcrypt.hash(password, foundUser.salt);
     if (hashedPassword !== foundUser.password) throw new UnauthorizedException('Invalid Credentials');
