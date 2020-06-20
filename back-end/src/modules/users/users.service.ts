@@ -1,4 +1,4 @@
-import { Injectable, ForbiddenException, Logger, ConflictException, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, ForbiddenException, ConflictException, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CrudRequest } from '@nestjsx/crud';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
@@ -8,8 +8,6 @@ import { UpdateUserDto } from './users.dto';
 
 @Injectable()
 export class UsersService extends TypeOrmCrudService<User> {
-  private logger = new Logger();
-
   constructor(@InjectRepository(UserRepository) private userRepository: UserRepository) {
     super(userRepository);
   }
@@ -23,7 +21,6 @@ export class UsersService extends TypeOrmCrudService<User> {
     try {
       return await super.updateOne(req, dto);
     } catch (error) {
-      this.logger.error(error.message);
       if (error.code === '23505') {
         throw new ConflictException('Email already exists');
       } else {
