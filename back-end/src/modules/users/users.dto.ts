@@ -21,7 +21,4 @@ export class UpdateUserDto {
   @IsOptional()
   @IsBoolean()
   isBlock: boolean;
-
-  @IsEmpty()
-  role: boolean;
 }
