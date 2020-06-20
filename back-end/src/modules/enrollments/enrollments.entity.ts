@@ -1,33 +1,31 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn, Unique } from 'typeorm';
 import { User } from '../users/users.entity';
 import { Course } from '../courses/courses.entity';
 
 @Entity()
+@Unique(['courseId', 'userId'])
 export class Enrollment {
   @PrimaryGeneratedColumn({})
   id: number;
 
-  @Column()
+  @Column({ default: 0 })
   rate: number;
 
-  @Column()
+  @Column({ default: null })
   comment: string;
-
-  @Column()
-  achievement: string;
 
   @CreateDateColumn()
   createdAt: Date;
 
   @Column()
-  userId: number;
-
-  @Column()
   courseId: number;
 
-  @ManyToOne(type => User, user => user.enrollments)
-  user: User;
+  @Column()
+  userId: number;
 
-  @ManyToOne(type => Course, course => course.enrollments)
+  @ManyToOne((type) => Course, (course) => course.enrollments)
   course: Course;
+
+  @ManyToOne((type) => User, (user) => user.enrollments)
+  user: User;
 }
