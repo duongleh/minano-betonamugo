@@ -16,9 +16,7 @@ export class AuthService {
 
   async signUp(signUpDto: SignUpDto): Promise<void> {
     const { name, email, password } = signUpDto;
-
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const { hashedPassword, salt } = await this.hashPassword(password);
     return this.userRepository.createNewUser(name, email, hashedPassword, salt);
   }
 
@@ -35,5 +33,11 @@ export class AuthService {
     const payload: JwtPayload = { name: foundUser.name, email, role: foundUser.role };
     const accessToken = this.jwtService.sign(payload);
     return { accessToken };
+  }
+
+  async hashPassword(password: string): Promise<{ hashedPassword: string; salt: string }> {
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+    return { hashedPassword, salt };
   }
 }

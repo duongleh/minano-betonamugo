@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, BaseEntity } from 'typeorm';
+import { Exclude } from 'class-transformer';
 import { Course } from '../courses/courses.entity';
 import { Enrollment } from '../enrollments/enrollments.entity';
 
@@ -14,9 +15,11 @@ export class User extends BaseEntity {
   email: string;
 
   @Column()
+  @Exclude()
   password: string;
 
   @Column()
+  @Exclude()
   salt: string;
 
   @Column({ default: null })

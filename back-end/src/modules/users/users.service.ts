@@ -1,31 +1,27 @@
-import { Injectable, ForbiddenException, ConflictException, InternalServerErrorException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CrudRequest } from '@nestjsx/crud';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { User } from './users.entity';
 import { UserRepository } from './users.repository';
-import { UpdateUserDto } from './users.dto';
+import { UpdateUserDto, UpdateMeDto } from './users.dto';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class UsersService extends TypeOrmCrudService<User> {
-  constructor(@InjectRepository(UserRepository) private userRepository: UserRepository) {
+  constructor(@InjectRepository(UserRepository) private userRepository: UserRepository, private authService: AuthService) {
     super(userRepository);
   }
 
-  async getUser(req: CrudRequest, user: User): Promise<User> {
-    if (user.role || user.id === req.parsed.paramsFilter[0].value) return super.getOne(req);
-    else throw new ForbiddenException();
+  async getMe(user: User): Promise<User> {
+    return await this.userRepository.findOne(user.id);
   }
 
-  async updateOne(req: CrudRequest, dto: UpdateUserDto): Promise<User> {
-    try {
-      return await super.updateOne(req, dto);
-    } catch (error) {
-      if (error.code === '23505') {
-        throw new ConflictException('Email already exists');
-      } else {
-        throw new InternalServerErrorException();
-      }
+  async updateUser(dto: UpdateUserDto | UpdateMeDto, id: number): Promise<void> {
+    if (dto.hasOwnProperty('password')) {
+      const { hashedPassword, salt } = await this.authService.hashPassword(dto.password);
+      dto.password = hashedPassword;
+      dto.salt = salt;
     }
+    await this.userRepository.updateUser(dto, id);
   }
 }
