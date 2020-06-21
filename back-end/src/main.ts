@@ -11,7 +11,7 @@ async function bootstrap() {
 
   const options = new DocumentBuilder().setTitle('minano-betonamugo API v1').addBearerAuth().build();
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('/', app, document);
+  SwaggerModule.setup('/', app, document, { swaggerOptions: { docExpansion: 'none' } });
 
   await app.listen(4000);
 }
