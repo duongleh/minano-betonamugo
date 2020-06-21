@@ -5,10 +5,11 @@ import { EnrollmentsModule } from './modules/enrollments/enrollments.module';
 import { CoursesModule } from './modules/courses/courses.module';
 import { VideosModule } from './modules/videos/videos.module';
 import { AuthModule } from './modules/auth/auth.module';
-import * as morgan from 'morgan';
+import config = require('./ormconfig');
+import morgan = require('morgan');
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), UsersModule, EnrollmentsModule, CoursesModule, VideosModule, AuthModule],
+  imports: [TypeOrmModule.forRoot(config), UsersModule, EnrollmentsModule, CoursesModule, VideosModule, AuthModule],
   controllers: [],
   providers: [Logger]
 })
@@ -17,7 +18,13 @@ export class AppModule implements NestModule {
 
   configure(consumer: MiddlewareConsumer): void {
     consumer
-      .apply(morgan('dev', { stream: { write: (message) => this.logger.log(message.substring(0, message.lastIndexOf('\n'))) } }))
+      .apply(
+        morgan('dev', {
+          stream: {
+            write: (message) => this.logger.log(message.substring(0, message.lastIndexOf('\n')), 'HTTP Request')
+          }
+        })
+      )
       .forRoutes('*');
   }
 }
