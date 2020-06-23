@@ -32,7 +32,7 @@ export class Course {
   @ManyToOne(type => User, user => user.courses)
   owner: User;
 
-  @OneToMany(type => Video, video => video.course)
+  @OneToMany(type => Video, video => video.course, { onDelete: 'CASCADE', onUpdate: 'CASCADE'})
   videos: Video[];
 
   @OneToMany(type => Enrollment, enrollment => enrollment.course)
