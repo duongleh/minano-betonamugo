@@ -10,6 +10,9 @@ import {
   SimpleForm,
   TextField,
   TextInput,
+  Show,
+  ShowButton,
+  SimpleShowLayout,
 } from 'react-admin';
 
 export const ListCourse = (props) => (
@@ -21,6 +24,7 @@ export const ListCourse = (props) => (
       <TextField label='Title' source='title' />
       <TextField label='Description' source='description' />
       <DateField source='createdAt' />
+      <ShowButton />
       <EditButton />
     </Datagrid>
   </List>
@@ -47,5 +51,18 @@ export const CourseEdit = (props) => {
         <TextInput label='Thumbnail' source='thumbnail' />
       </SimpleForm>
     </Edit>
+  );
+};
+
+export const CourseShow = (props) => {
+  return (
+    <Show {...props}>
+      <SimpleShowLayout>
+        <ImageField source='thumbnail'></ImageField>
+        <TextField label='Title' source='title' />
+        <TextField label='Description' source='description' />
+        <DateField source='createdAt' />
+      </SimpleShowLayout>
+    </Show>
   );
 };

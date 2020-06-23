@@ -1,6 +1,15 @@
 import React from 'react';
-import { BooleanField, Datagrid, DateField, List, TextField } from 'react-admin';
+import { BooleanField, Datagrid, DateField, List, TextField, FunctionField } from 'react-admin';
 import BlockButton from './BlockButton';
+import UnblockButton from './UnblockButton';
+
+const actionButton = (record) => {
+  if (record.isBlock) {
+    return <UnblockButton />;
+  } else {
+    return <BlockButton />;
+  }
+};
 
 const ListUser = (props) => {
   return (
@@ -11,7 +20,7 @@ const ListUser = (props) => {
         <TextField label='Email' source='email'></TextField>
         <DateField label='Created at' source='createdAt'></DateField>
         <BooleanField label='Blocked' source='isBlock' />
-        <BlockButton />
+        <FunctionField label='' render={(record) => actionButton(record)} />
       </Datagrid>
     </List>
   );
