@@ -1,7 +1,7 @@
 import { Controller, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { Crud, CrudController, Override, ParsedRequest, ParsedBody, CrudRequest, CrudRequestInterceptor } from '@nestjsx/crud';
+import { Crud, CrudController, Override, ParsedRequest, ParsedBody, CrudRequest } from '@nestjsx/crud';
 import { Course } from './courses.entity';
 import { CoursesService } from './courses.service';
 import { CreateCourseDto, UpdateCourseDto } from './courses.dto';
