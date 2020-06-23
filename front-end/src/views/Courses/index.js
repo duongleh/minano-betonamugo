@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Row, Col, Card, Button } from 'antd';
 import { Link, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 import './index.css';
 import Carou from 'components/Carousel';
@@ -10,9 +12,13 @@ import Review from 'components/Review';
 const { Paragraph } = Typography;
 
 function Course() {
+  const LoginStatus = useSelector((state) => state.LoginStatus);
   const { id } = useParams();
+  const [rows] = useState(2);
+  const [isEnroll, setIsEnroll] = useState(false);
+  const [erollment, setErollment] = useState({});
 
-  const [course] = useState({
+  const [course, setCourse] = useState({
     title: 'Bai hoc vo long',
     description:
       "To be, or not to be, that is a question: Whether it is nobler in the mind to suffer. The slings and arrows of outrageous fortune Or to take arms against a sea of troubles, And by opposing end them? To die: to sleep; No more; and by a sleep to say we end The heart-ache and the thousand natural shocks That flesh is heir to, 'tis a consummation Devoutly to be wish'd. To die, to sleep To sleep- perchance to dream: ay, there's the rub! For in that sleep of death what dreams may come When we have shuffled off this mortal coil, Must give us pause. There 's the respect That makes calamity of so long life--William Shakespeare",
@@ -20,7 +26,51 @@ function Course() {
     thumbnail: 'https://i.pinimg.com/originals/08/ad/0c/08ad0cbece1080aa5b5cd3ccb157af3f.jpg'
   });
 
-  const [rows] = useState(2);
+  useEffect(() => {
+    const fetchCourse = async () => {
+      const req = await axios.get(
+        `http://localhost:4000/api/v1/courses/${id}?join=enrollments&join=enrollments.user&join=videos`
+      );
+      if (req.status === 200) {
+        setCourse(req.data);
+        let isHave = req.data.enrollments.filter((enrollment) => {
+          return enrollment.user.id === LoginStatus.id;
+        });
+        if (isHave.length > 0) {
+          setIsEnroll(true);
+          setErollment(isHave[0]);
+        }
+      }
+    };
+    fetchCourse();
+  }, [LoginStatus.id, id]);
+
+  const fetchCourse = async () => {
+    const req = await axios.get(
+      `http://localhost:4000/api/v1/courses/${id}?join=enrollments&join=enrollments.user&join=videos`
+    );
+    if (req.status === 200) {
+      setCourse(req.data);
+      let isHave = req.data.enrollments.filter((enrollment) => {
+        return enrollment.user.id === LoginStatus.id;
+      });
+      if (isHave.length > 0) {
+        setIsEnroll(true);
+        setErollment(isHave[0]);
+      }
+    }
+  };
+
+  const enroll = async () => {
+    const req = await axios.post('http://localhost:4000/api/v1/enrollments', {
+      courseId: parseInt(id)
+    });
+    if (req.status === 201) {
+      setIsEnroll(true);
+      fetchCourse();
+    }
+  };
+
   return (
     <div>
       <Carou url={course.thumbnail} />
@@ -33,10 +83,7 @@ function Course() {
                 className='tl'
                 ellipsis={{
                   rows,
-                  expandable: true,
-                  onEllipsis: (ellipsis) => {
-                    console.log('Ellipsis changed:', ellipsis);
-                  }
+                  expandable: true
                 }}
               >
                 {course.description}
@@ -48,7 +95,11 @@ function Course() {
             </Col>
 
             <Col span={24}>
-              <Review />
+              <Review
+                review={course.enrollments}
+                fetchCourse={fetchCourse}
+                enrollment={erollment}
+              />
             </Col>
           </Row>
         </Col>
@@ -58,9 +109,15 @@ function Course() {
             bordered={false}
             style={{ width: '100%', boxShadow: '5px 8px 24px 5px rgba(208, 216, 243, 0.6)' }}
           >
-            <Link to={`/video/${id}`}>
-              <Button type='danger'>Ngay luôn chứ gì nữa</Button>
-            </Link>
+            {isEnroll ? (
+              <Link to={`/video/${id}`}>
+                <Button type='danger'>Watch video</Button>
+              </Link>
+            ) : (
+              <Button onClick={() => enroll()} type='danger'>
+                Enroll
+              </Button>
+            )}
           </Card>
         </Col>
       </Row>

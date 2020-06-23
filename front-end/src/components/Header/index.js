@@ -29,15 +29,16 @@ function HeaderNav() {
             <h2 className='cw'>Home</h2>
           </Link>
         </Col>
+        {/* <Col>
+        </Col> */}
         <Col>
           {LoginStatus.isLogin ? (
             <Row>
               <Col className='mgr_10'>
-                <Link to='profile'>
-                  <Avatar
-                    style={{ backgroundColor: 'white' }}
-                    src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
-                  />
+                <Link to='/profile'>
+                  <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
+                    {LoginStatus.name[0]}
+                  </Avatar>
                 </Link>
               </Col>
               <Col className='usename mgr_10'>{LoginStatus.name}</Col>

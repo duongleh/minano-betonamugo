@@ -7,7 +7,7 @@ export const login = (token) => async (dispatch) => {
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 
   await axios
-    .get('http://localhost:4000/api/v1/auth/verify')
+    .get('http://localhost:4000/api/v1/users/me')
     .then((response) => {
       // handle success
       dispatch({
@@ -15,6 +15,8 @@ export const login = (token) => async (dispatch) => {
         isLogin: true,
         name: response.data.name,
         role: response.data.role,
+        email: response.data.email,
+        id: response.data.id,
         token
       });
 
