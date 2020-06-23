@@ -17,6 +17,13 @@ import { RolesGuard } from '../../shared/Guards/roles.guard';
     updateOneBase: { decorators: [ApiBearerAuth(), UseGuards(AuthGuard(), RolesGuard)] },
     deleteOneBase: { decorators: [ApiBearerAuth(), UseGuards(AuthGuard(), RolesGuard)] }
   },
+  query: {
+    join: {
+      videos: { exclude: ['courseId', 'url'] },
+      enrollments: { exclude: ['courseId'] },
+      'enrollments.user': {}
+    }
+  },
   dto: {
     create: CreateCourseDto,
     update: UpdateCourseDto
