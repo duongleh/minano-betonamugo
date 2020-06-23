@@ -21,3 +21,10 @@ export class UpdateEnrollmentDto {
   @IsString()
   comment: string;
 }
+
+export class CreateProgressDto {
+  @ApiProperty()
+  @IsDefined()
+  @IsNumber()
+  videoId: number;
+}

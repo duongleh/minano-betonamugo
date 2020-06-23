@@ -1,18 +1,27 @@
-import { Injectable, NotFoundException, ConflictException, InternalServerErrorException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+  InternalServerErrorException,
+  ForbiddenException,
+  BadRequestException
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CrudRequest } from '@nestjsx/crud';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { Enrollment } from './enrollments.entity';
 import { EnrollmentRepository } from './enrollments.repository';
-import { CreateEnrollmentDto, UpdateEnrollmentDto } from './enrollments.dto';
+import { CreateEnrollmentDto, UpdateEnrollmentDto, CreateProgressDto } from './enrollments.dto';
 import { User } from '../users/users.entity';
 import { CourseRepository } from '../courses/courses.repository';
+import { VideoRepository } from '../videos/videos.repository';
 
 @Injectable()
 export class EnrollmentsService extends TypeOrmCrudService<Enrollment> {
   constructor(
     @InjectRepository(EnrollmentRepository) private enrollmentRepository: EnrollmentRepository,
-    @InjectRepository(CourseRepository) private courseRepository: CourseRepository
+    @InjectRepository(CourseRepository) private courseRepository: CourseRepository,
+    @InjectRepository(VideoRepository) private videoRepository: VideoRepository
   ) {
     super(enrollmentRepository);
   }
@@ -43,5 +52,26 @@ export class EnrollmentsService extends TypeOrmCrudService<Enrollment> {
     } catch (error) {
       throw new InternalServerErrorException();
     }
+  }
+
+  async getProgress(id: number, user: User): Promise<Enrollment> {
+    const enrollment = await this.enrollmentRepository.findOne(id, { relations: ['completedVideo'] });
+    if (!enrollment) throw new NotFoundException(`Enrollment ${id} not found`);
+    if (!user.role && enrollment.userId !== user.id) throw new ForbiddenException();
+    return enrollment;
+  }
+
+  async createProgress(id: number, dto: CreateProgressDto, user: User): Promise<Enrollment> {
+    const enrollment = await this.getProgress(id, user);
+
+    const video = await this.videoRepository.findOne(dto.videoId);
+    if (!video) throw new NotFoundException(`Video ${dto.videoId} not found`);
+    if (video.courseId !== enrollment.courseId) throw new BadRequestException('Video not belong to course');
+    const videos = await this.videoRepository.find({ where: { courseId: enrollment.courseId } });
+
+    enrollment.completedVideo.push(video);
+    enrollment.completionRatio = Number(((enrollment.completedVideo.length / videos.length) * 100).toFixed(2));
+    await enrollment.save();
+    return enrollment;
   }
 }
