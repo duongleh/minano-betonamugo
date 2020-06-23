@@ -12,7 +12,7 @@ export class Video {
   @Column()
   url: string;
 
-  @Column({default: 0})
+  @Column({ default: 0 })
   viewCount: number;
 
   @CreateDateColumn()
@@ -21,6 +21,6 @@ export class Video {
   @Column()
   courseId: number;
 
-  @ManyToOne(type => Course, course => course.videos)
+  @ManyToOne((type) => Course, (course) => course.videos, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
   course: Course;
 }

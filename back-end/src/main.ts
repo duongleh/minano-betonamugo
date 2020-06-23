@@ -1,3 +1,16 @@
+import { CrudConfigService } from '@nestjsx/crud';
+
+CrudConfigService.load({
+  routes: {
+    deleteOneBase: {
+      returnDeleted: true,
+    },
+    updateOneBase: {
+      returnShallow: true,
+    },
+  },
+});
+
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';

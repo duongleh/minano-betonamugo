@@ -10,7 +10,7 @@ import {
 
 const VideoCreate = (props) => (
   <Create {...props}>
-    <SimpleForm>
+    <SimpleForm redirect='list'>
       <ReferenceInput label='Course' source='courseId' reference='courses' validate={[required()]}>
         <SelectInput optionText='name' />
       </ReferenceInput>

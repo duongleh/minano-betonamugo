@@ -1,5 +1,6 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { IsString, IsDefined, IsUrl } from 'class-validator';
+import { IsString, IsDefined, IsUrl, IsNumber } from 'class-validator';
+import { CreateVideoDto } from '../videos/videos.dto';
 
 export class CreateCourseDto {
   @ApiProperty()
@@ -21,6 +22,10 @@ export class CreateCourseDto {
   @IsDefined()
   @IsUrl()
   thumbnail: string;
+
+  @ApiProperty()
+  @IsDefined()
+  videos: Array<CreateVideoDto>;
 }
 
 export class UpdateCourseDto extends PartialType(CreateCourseDto) {}
