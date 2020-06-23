@@ -29,12 +29,12 @@ export class Course {
   @Column()
   ownerId: number;
 
-  @ManyToOne(type => User, user => user.courses)
+  @ManyToOne((type) => User, (user) => user.courses)
   owner: User;
 
-  @OneToMany(type => Video, video => video.course, { onDelete: 'CASCADE', onUpdate: 'CASCADE'})
+  @OneToMany((type) => Video, (video) => video.course, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   videos: Video[];
 
-  @OneToMany(type => Enrollment, enrollment => enrollment.course)
+  @OneToMany((type) => Enrollment, (enrollment) => enrollment.course)
   enrollments: Enrollment[];
 }
