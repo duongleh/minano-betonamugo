@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Param } from '@nestjs/common';
+import { Controller, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { Crud, CrudController, Override, ParsedRequest, CrudRequest, ParsedBody } from '@nestjsx/crud';
@@ -14,12 +14,12 @@ import { RolesGuard } from '../../shared/Guards/roles.guard';
   model: { type: Video },
   routes: {
     exclude: ['createManyBase', 'replaceOneBase'],
-    deleteOneBase: { decorators: [UseGuards(RolesGuard)] },
+    deleteOneBase: { decorators: [UseGuards(RolesGuard)] }
   },
   dto: {
     create: CreateVideoDto,
-    update: UpdateVideoDto,
-  },
+    update: UpdateVideoDto
+  }
 })
 @Controller('videos')
 export class VideosController implements CrudController<Video> {
@@ -34,7 +34,6 @@ export class VideosController implements CrudController<Video> {
   @Override()
   @UseGuards(RolesGuard)
   updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: UpdateVideoDto): Promise<Video> {
-    console.log(dto);
     return this.service.updateOne(req, dto);
   }
 }

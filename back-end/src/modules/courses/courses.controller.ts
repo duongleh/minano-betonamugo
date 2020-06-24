@@ -15,7 +15,7 @@ import { RolesGuard } from '../../shared/Guards/roles.guard';
   routes: {
     exclude: ['createManyBase', 'replaceOneBase'],
     updateOneBase: { decorators: [ApiBearerAuth(), UseGuards(AuthGuard(), RolesGuard)] },
-    deleteOneBase: { decorators: [ApiBearerAuth(), UseGuards(AuthGuard(), RolesGuard)] },
+    deleteOneBase: { decorators: [ApiBearerAuth(), UseGuards(AuthGuard(), RolesGuard)] }
   },
   query: {
     join: {
@@ -26,8 +26,8 @@ import { RolesGuard } from '../../shared/Guards/roles.guard';
   },
   dto: {
     create: CreateCourseDto,
-    update: UpdateCourseDto,
-  },
+    update: UpdateCourseDto
+  }
 })
 @Controller('courses')
 export class CoursesController implements CrudController<Course> {

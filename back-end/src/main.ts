@@ -2,13 +2,9 @@ import { CrudConfigService } from '@nestjsx/crud';
 
 CrudConfigService.load({
   routes: {
-    deleteOneBase: {
-      returnDeleted: true,
-    },
-    updateOneBase: {
-      returnShallow: true,
-    },
-  },
+    updateOneBase: { returnShallow: true },
+    deleteOneBase: { returnDeleted: true }
+  }
 });
 
 import { NestFactory } from '@nestjs/core';

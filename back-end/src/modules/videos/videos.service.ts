@@ -9,7 +9,10 @@ import { CourseRepository } from '../courses/courses.repository';
 
 @Injectable()
 export class VideosService extends TypeOrmCrudService<Video> {
-  constructor(@InjectRepository(VideoRepository) private videoRepository: VideoRepository, @InjectRepository(CourseRepository) private courseRepository: CourseRepository) {
+  constructor(
+    @InjectRepository(VideoRepository) private videoRepository: VideoRepository,
+    @InjectRepository(CourseRepository) private courseRepository: CourseRepository
+  ) {
     super(videoRepository);
   }
 

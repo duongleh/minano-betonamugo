@@ -1,10 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, OneToMany } from 'typeorm';
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, OneToMany } from 'typeorm';
 import { User } from '../users/users.entity';
 import { Video } from '../videos/videos.entity';
 import { Enrollment } from '../enrollments/enrollments.entity';
 
 @Entity()
-export class Course {
+export class Course extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -29,12 +29,12 @@ export class Course {
   @Column()
   ownerId: number;
 
-  @ManyToOne(type => User, user => user.courses)
+  @ManyToOne((type) => User, (user) => user.courses)
   owner: User;
 
-  @OneToMany(type => Video, video => video.course, { onDelete: 'CASCADE', onUpdate: 'CASCADE'})
+  @OneToMany((type) => Video, (video) => video.course, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   videos: Video[];
 
-  @OneToMany(type => Enrollment, enrollment => enrollment.course)
+  @OneToMany((type) => Enrollment, (enrollment) => enrollment.course)
   enrollments: Enrollment[];
 }

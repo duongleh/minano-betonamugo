@@ -1,8 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne } from 'typeorm';
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, ManyToMany } from 'typeorm';
 import { Course } from '../courses/courses.entity';
+import { Enrollment } from '../enrollments/enrollments.entity';
 
 @Entity()
-export class Video {
+export class Video extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -23,4 +24,7 @@ export class Video {
 
   @ManyToOne((type) => Course, (course) => course.videos, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
   course: Course;
+
+  @ManyToMany((type) => Enrollment, (enrollment) => enrollment.completedVideo)
+  enrollments: Enrollment[];
 }

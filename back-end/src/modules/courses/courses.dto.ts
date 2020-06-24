@@ -1,6 +1,7 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { IsString, IsDefined, IsUrl, IsNumber } from 'class-validator';
-import { CreateVideoDto } from '../videos/videos.dto';
+import { ApiProperty, PartialType, OmitType } from '@nestjs/swagger';
+import { IsString, IsDefined, IsUrl, IsArray, ValidateNested } from 'class-validator';
+import { CreateVideoWithCourseDto } from '../videos/videos.dto';
+import { Type } from 'class-transformer';
 
 export class CreateCourseDto {
   @ApiProperty()
@@ -23,9 +24,14 @@ export class CreateCourseDto {
   @IsUrl()
   thumbnail: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: [CreateVideoWithCourseDto] })
   @IsDefined()
-  videos: Array<CreateVideoDto>;
+  @IsArray()
+  @ValidateNested()
+  @Type(() => CreateVideoWithCourseDto)
+  videos: CreateVideoWithCourseDto[];
+
+  ownerId: number;
 }
 
-export class UpdateCourseDto extends PartialType(CreateCourseDto) {}
+export class UpdateCourseDto extends PartialType(OmitType(CreateCourseDto, ['videos'] as const)) {}
