@@ -47,11 +47,28 @@ export class EnrollmentsService extends TypeOrmCrudService<Enrollment> {
     if (!enrollment) throw new NotFoundException('Enrollment not found');
     if (enrollment.userId !== user.id) throw new ForbiddenException();
 
+    let update;
     try {
-      return await super.updateOne(req, dto);
+      update = await super.updateOne(req, dto);
     } catch (error) {
       throw new InternalServerErrorException();
     }
+
+    if (dto.hasOwnProperty('rate')) {
+      const course = await this.courseRepository.findOne(enrollment.courseId, { relations: ['enrollments'] });
+      let rateCount = 0;
+      const rate = course.enrollments.reduce((total, current) => {
+        if (current.rate !== null) {
+          total += current.rate;
+          rateCount += 1;
+        }
+        return total;
+      }, 0);
+      course.rate = Math.ceil(rate / rateCount);
+      course.save();
+    }
+
+    return update;
   }
 
   async getProgress(id: number, user: User): Promise<Enrollment> {

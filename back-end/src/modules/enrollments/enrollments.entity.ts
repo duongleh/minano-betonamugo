@@ -18,7 +18,7 @@ export class Enrollment extends BaseEntity {
   @PrimaryGeneratedColumn({})
   id: number;
 
-  @Column({ default: 0 })
+  @Column({ default: null })
   rate: number;
 
   @Column({ default: null })

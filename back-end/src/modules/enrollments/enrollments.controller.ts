@@ -1,5 +1,5 @@
 import { Controller, UseGuards, UseInterceptors, Get, Post, Param, ClassSerializerInterceptor, ParseIntPipe, Body } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { Crud, CrudAuth, CrudController, Override, ParsedRequest, CrudRequest, ParsedBody, CrudRequestInterceptor } from '@nestjsx/crud';
 import { Enrollment } from './enrollments.entity';
@@ -37,12 +37,14 @@ export class EnrollmentsController implements CrudController<Enrollment> {
     return this.service.updateEnrollment(req, dto, user);
   }
 
+  @ApiOperation({ summary: `Retrieve one Enrollment's progress` })
   @UseInterceptors(CrudRequestInterceptor, ClassSerializerInterceptor)
   @Get('/:id/progress')
   getManyProgress(@Param('id', ParseIntPipe) id: number, @GetUser() user: User): Promise<Enrollment> {
     return this.service.getProgress(id, user);
   }
 
+  @ApiOperation({ summary: `Create one Enrollment's progress` })
   @UseInterceptors(CrudRequestInterceptor, ClassSerializerInterceptor)
   @Post('/:id/progress')
   createProgress(@Param('id', ParseIntPipe) id: number, @Body() dto: CreateProgressDto, @GetUser() user: User): Promise<Enrollment> {
