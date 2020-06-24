@@ -24,9 +24,16 @@ function Profile() {
         </Col>
       </Row>
 
-      <ListCourse title='Participating Courses' />
+      <ListCourse
+        title='Participating Courses'
+        url='http://localhost:4000/api/v1/enrollments?filter=completionRatio||$ne||100'
+      />
 
-      <ListCourse title='Completed Course' isCertificate={true} />
+      <ListCourse
+        title='Completed Course'
+        isCertificate={true}
+        url='http://localhost:4000/api/v1/enrollments?filter=completionRatio||$eq||100'
+      />
     </div>
   );
 }

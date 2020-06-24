@@ -1,10 +1,10 @@
 import React from 'react';
-import { Rate, Card, Avatar } from 'antd';
+import { Rate, Card, Avatar, Row, Col } from 'antd';
 
 import './index.css';
 const { Meta } = Card;
 
-function CourseCard({ courseDetail }) {
+function CourseCard({ courseDetail, progress }) {
   return (
     <Card
       span={6}
@@ -15,10 +15,14 @@ function CourseCard({ courseDetail }) {
         title={courseDetail.title}
         description={courseDetail.description}
       />
-
-      <div className='space rate'>
-        <Rate allowHalf defaultValue={0} />
-      </div>
+      <Row>
+        {!!progress ? <p style={{ margin: '0px' }}>{progress}%</p> : ''}
+        <Col>
+          <div className='space rate'>
+            <Rate allowHalf defaultValue={0} />
+          </div>
+        </Col>
+      </Row>
     </Card>
   );
 }
