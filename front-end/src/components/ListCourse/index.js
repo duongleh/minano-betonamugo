@@ -1,26 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import * as courseAction from 'actions/courseAction';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'antd';
 import CourseCard from 'components/Card';
-import axios from 'axios';
 
 function ListCourse({ title, isCertificate }) {
-  const [courses, setCourses] = useState(null);
+  const dispatch = useDispatch();
+  const CourseStatus = useSelector((state) => state.CourseStatus);
 
   useEffect(() => {
     const fetchCourse = async () => {
-      const course = await axios.get('http://localhost:4000/api/v1/courses');
-      setCourses(course.data);
+      dispatch(courseAction.getAllCourese());
     };
     fetchCourse();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
       <h1 className='tl'>{title}</h1>
       <Row gutter={[16, 24]}>
-        {!!courses ? (
-          courses.map((course, index) => (
+        {!!CourseStatus.courses ? (
+          CourseStatus.courses.map((course, index) => (
             <Col className='gutter-row' key={index} span={6}>
               {!!isCertificate ? (
                 <Link to={`/certificate/${course.id}`}>

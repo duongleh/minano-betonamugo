@@ -1,0 +1,4 @@
+.column-thumbnail > div > img {
+  height: 160px !important;
+  width: 240px !important;
+}

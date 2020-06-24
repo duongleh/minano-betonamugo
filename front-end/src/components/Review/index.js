@@ -1,13 +1,17 @@
 import React, { createElement, useState } from 'react';
-import { Comment, Tooltip, Avatar, Col } from 'antd';
+import { Comment, Tooltip, Avatar, Col, Input, Rate, Button, Row } from 'antd';
 import moment from 'moment';
+import axios from 'axios';
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
 
-const Review = () => {
+const { TextArea } = Input;
+
+const Review = ({ review, fetchCourse, enrollment }) => {
   const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
   const [action, setAction] = useState(null);
-  const [comments] = useState([1, 2, 3, 4, 5]);
+  const [comment, setComment] = useState('');
+  const [star, setStar] = useState('');
 
   const like = () => {
     setLikes(1);
@@ -41,36 +45,76 @@ const Review = () => {
     <span key='comment-basic-reply-to'>Reply to</span>
   ];
 
+  const submitReview = async () => {
+    // TODO test
+    const req = await axios.patch(`http://localhost:4000/api/v1/enrollments/${enrollment.id}`, {
+      rate: star,
+      comment
+    });
+    if (req.status === 200) {
+      fetchCourse();
+      setComment('');
+      setStar(0);
+    }
+  };
+
   return (
     <Col span={24} className='tl'>
       <h1 className='tl'>Review</h1>
-      <hr />
-      {comments.map((comment) => (
-        <Col key={comment}>
-          <Comment
-            actions={actions}
-            author={'Han Solo'}
-            avatar={
-              <Avatar
-                src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
-                alt='Han Solo'
+      {enrollment.id ? (
+        <Col>
+          <TextArea rows={4} onChange={(event) => setComment(event.target.value)} />
+          <Col>
+            <Row justify='end'>
+              <Rate
+                allowHalf
+                onChange={(event) => setStar(event)}
+                style={{ marginRight: '15px' }}
               />
-            }
-            content={
-              <p>
-                We supply a series of design principles, practical patterns and high quality design
-                resources (Sketch and Axure), to help people create their product prototypes
-                beautifully and efficiently.
-              </p>
-            }
-            datetime={
-              <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
-                <span>{moment().fromNow()}</span>
-              </Tooltip>
-            }
-          />
+              <Button onClick={() => submitReview()} type='primary'>
+                Submit
+              </Button>
+            </Row>
+          </Col>
         </Col>
-      ))}
+      ) : (
+        <></>
+      )}
+
+      <hr />
+      {review ? (
+        review.map((comment) => {
+          if (comment.comment) {
+            return (
+              <Col key={comment.id}>
+                <Comment
+                  actions={actions}
+                  author={comment.user.name}
+                  avatar={
+                    <Avatar
+                      // src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
+                      style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
+                      alt={comment.user.name}
+                    >
+                      {comment.user.name[0]}
+                    </Avatar>
+                  }
+                  content={<p>{comment.comment}</p>}
+                  datetime={
+                    <Tooltip title={moment().format(comment.createdAt)}>
+                      <span>{moment().fromNow()}</span>
+                    </Tooltip>
+                  }
+                />
+              </Col>
+            );
+          } else {
+            return '';
+          }
+        })
+      ) : (
+        <></>
+      )}
     </Col>
   );
 };

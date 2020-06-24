@@ -2,8 +2,10 @@ import * as login from 'actions/loginAction';
 
 const initialState = {
   isLogin: false,
+  id: '',
   name: '',
   token: '',
+  email: '',
   isLoading: true,
   users: null,
   currentUserGroup: null
@@ -18,7 +20,9 @@ const loginReducer = (state = initialState, action) => {
         ...state,
         isLogin: action.isLogin,
         name: action.name,
-        token: action.token
+        email: action.email,
+        token: action.token,
+        id: action.id
       };
     case login.ISLOADING:
       return {
