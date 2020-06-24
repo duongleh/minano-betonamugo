@@ -23,6 +23,9 @@ export class Course extends BaseEntity {
   @Column({ default: 0 })
   viewCount: number;
 
+  @Column({ default: 0 })
+  rate: number;
+
   @CreateDateColumn()
   createdAt: Date;
 
