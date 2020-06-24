@@ -8,6 +8,7 @@ import './index.css';
 import Carou from 'components/Carousel';
 import StudentFeedback from 'components/StudentFeedback';
 import Review from 'components/Review';
+import CourseContent from 'components/CourseContent';
 
 const { Paragraph } = Typography;
 
@@ -16,7 +17,8 @@ function Course() {
   const { id } = useParams();
   const [rows] = useState(2);
   const [isEnroll, setIsEnroll] = useState(false);
-  const [erollment, setErollment] = useState({});
+  const [enrollment, setEnrollment] = useState({});
+  const [completedVideo, setCompletedVideo] = useState(null);
 
   const [course, setCourse] = useState({
     title: 'Bai hoc vo long',
@@ -38,12 +40,24 @@ function Course() {
         });
         if (isHave.length > 0) {
           setIsEnroll(true);
-          setErollment(isHave[0]);
+          setEnrollment(isHave[0]);
         }
       }
     };
     fetchCourse();
   }, [LoginStatus.id, id]);
+
+  useEffect(() => {
+    const fetchProgress = async () => {
+      if (!!enrollment.id) {
+        const req = await axios.get(
+          `http://localhost:4000/api/v1/enrollments/${enrollment.id}/progress`
+        );
+        setCompletedVideo(req.data);
+      }
+    };
+    fetchProgress();
+  }, [enrollment.id]);
 
   const fetchCourse = async () => {
     const req = await axios.get(
@@ -56,7 +70,7 @@ function Course() {
       });
       if (isHave.length > 0) {
         setIsEnroll(true);
-        setErollment(isHave[0]);
+        setEnrollment(isHave[0]);
       }
     }
   };
@@ -91,6 +105,10 @@ function Course() {
             </Col>
 
             <Col span={24}>
+              <CourseContent videos={course.videos} />
+            </Col>
+
+            <Col span={24}>
               <StudentFeedback />
             </Col>
 
@@ -98,7 +116,7 @@ function Course() {
               <Review
                 review={course.enrollments}
                 fetchCourse={fetchCourse}
-                enrollment={erollment}
+                enrollment={enrollment}
               />
             </Col>
           </Row>
@@ -110,7 +128,14 @@ function Course() {
             style={{ width: '100%', boxShadow: '5px 8px 24px 5px rgba(208, 216, 243, 0.6)' }}
           >
             {isEnroll ? (
-              <Link to={`/video/${id}`}>
+              <Link
+                to={{
+                  pathname: `/video/${id}`,
+                  state: {
+                    enrollment: completedVideo
+                  }
+                }}
+              >
                 <Button type='danger'>Watch video</Button>
               </Link>
             ) : (
