@@ -9,9 +9,7 @@ import { push } from 'react-router-redux';
 class BlockButton extends Component {
   handleClick = () => {
     const { push, record, showNotification } = this.props;
-    let updatedRecord = { ...record, isBlock: true };
-    updatedRecord.role = undefined;
-    dataProvider(UPDATE, 'users', { id: record.id, data: updatedRecord })
+    dataProvider(UPDATE, 'users', { id: record.id, data: { isBlock: true } })
       .then(() => {
         showNotification('User blocked');
         push('/users');

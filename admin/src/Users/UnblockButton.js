@@ -9,9 +9,7 @@ import { push } from 'react-router-redux';
 class UnblockButton extends Component {
   handleClick = () => {
     const { push, record, showNotification } = this.props;
-    let updatedRecord = { ...record, isBlock: false };
-    updatedRecord.role = undefined;
-    dataProvider(UPDATE, 'users', { id: record.id, data: updatedRecord })
+    dataProvider(UPDATE, 'users', { id: record.id, data: { isBlock: false } })
       .then(() => {
         showNotification('User unblocked');
         push('/users');

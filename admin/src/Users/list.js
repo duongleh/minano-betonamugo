@@ -5,9 +5,9 @@ import UnblockButton from './UnblockButton';
 
 const actionButton = (record) => {
   if (record.isBlock) {
-    return <UnblockButton />;
+    return <UnblockButton record={record} />;
   } else {
-    return <BlockButton />;
+    return <BlockButton record={record} />;
   }
 };
 
