@@ -5,11 +5,12 @@ import { EnrollmentsModule } from './modules/enrollments/enrollments.module';
 import { CoursesModule } from './modules/courses/courses.module';
 import { VideosModule } from './modules/videos/videos.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { MeModule } from './modules/me/me.module';
 import config = require('./ormconfig');
 import morgan = require('morgan');
 
 @Module({
-  imports: [TypeOrmModule.forRoot(config), UsersModule, EnrollmentsModule, CoursesModule, VideosModule, AuthModule],
+  imports: [TypeOrmModule.forRoot(config), UsersModule, EnrollmentsModule, CoursesModule, VideosModule, AuthModule, MeModule],
   controllers: [],
   providers: [Logger]
 })

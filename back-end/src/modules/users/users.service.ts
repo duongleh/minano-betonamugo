@@ -12,10 +12,6 @@ export class UsersService extends TypeOrmCrudService<User> {
     super(userRepository);
   }
 
-  async getMe(user: User): Promise<User> {
-    return await this.userRepository.findOne(user.id);
-  }
-
   async updateUser(dto: UpdateUserDto | UpdateMeDto, id: number): Promise<void> {
     if (dto.hasOwnProperty('password')) {
       const { hashedPassword, salt } = await this.authService.hashPassword(dto.password);
