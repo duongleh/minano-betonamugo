@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'antd';
+import axios from 'axios';
 
 import './index.css';
 
 function Certificate() {
   const [user, setUser] = useState('');
+  const [course, setCourse] = useState('');
+
+  const fetchCourse = async (id) => {
+    const req = await axios.get(`http://localhost:4000/api/v1/courses/${id}`);
+    if (req.status === 200) setCourse(req.data);
+  };
 
   useEffect(() => {
     const credentials = JSON.parse(atob(localStorage.getItem('token').split('.')[1]));
     setUser(credentials.name);
-  });
+    fetchCourse(window.location.href.split('http://localhost:3000/certificate/')[1]);
+  }, []);
 
   return (
     <div style={{ margin: '30px 0px' }}>
@@ -44,8 +52,8 @@ function Certificate() {
 
               <div className='col-xs-12'>
                 <div className='pm-certificate-name margin-0 col-xs-8 text-center'>
-                  <p className='bold'>Has been recognized for outstanding achievement</p>
-                  <p className='bold'>at Basic fan dance course</p>
+                  <p className='bold'>Has been recognized for outstanding achievement at</p>
+                  <p className='bold'>{course.title}</p>
                 </div>
                 <div className='col-xs-2'>{/* <!-- LEAVE EMPTY --> */}</div>
               </div>
