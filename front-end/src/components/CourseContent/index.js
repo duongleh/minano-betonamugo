@@ -2,7 +2,6 @@ import React from 'react';
 import { List, Avatar } from 'antd';
 
 function CourseContent({ videos }) {
-  console.log(videos);
   return (
     <div>
       <h1 className='tl'>Course Content</h1>
