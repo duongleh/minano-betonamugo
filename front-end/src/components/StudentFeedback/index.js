@@ -3,15 +3,15 @@ import { Rate, Row, Col, Progress } from 'antd';
 
 import './index.css';
 
-function StudentFeedback() {
+function StudentFeedback({rate}) {
   const [stars] = useState([5, 4, 3, 2, 1]);
   return (
     <div>
       <h1 className='tl'>Student Feedback</h1>
       <Row>
         <Col>
-          <p className='rate_f'>4.5</p>
-          <Rate disabled allowHalf defaultValue={4.5} />
+          <p className='rate_f'>{rate}</p>
+          <Rate disabled allowHalf value={rate} />
         </Col>
         <Col span={15}>
           {stars.map((star) => (

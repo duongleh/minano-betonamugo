@@ -109,7 +109,7 @@ function Course() {
             </Col>
 
             <Col span={24}>
-              <StudentFeedback />
+              <StudentFeedback rate={course.rate}/>
             </Col>
 
             <Col span={24}>
