@@ -69,7 +69,7 @@ function HeaderNav() {
                   </Avatar>
                 </Link>
               </Col>
-              <Col className='usename mgr_10'>{LoginStatus.name}</Col>
+              <Col className='username mgr_10'>{LoginStatus.name}</Col>
               <Col>
                 <Dropdown overlay={menu}>
                   <div className='ant-dropdown-link cl_w' onClick={(e) => e.preventDefault()}>

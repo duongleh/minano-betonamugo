@@ -1,8 +1,9 @@
 .App {
   text-align: center;
 }
+
 .min_height {
-  min-height: 80vh !important;
+  min-height: 100vh !important;
 }
 
 .bg_w {

@@ -35,11 +35,11 @@ function App() {
         {LoginStatus.isLoading ? (
           <LoadingPage />
         ) : (
-          <Layout>
+          <Layout className='min_height'>
             <Header>
               <HeaderNav />
             </Header>
-            <Content className='min_height container bg_w'>
+            <Content className='container bg_w'>
               <Router />
             </Content>
             <Footer>
