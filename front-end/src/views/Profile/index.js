@@ -20,7 +20,7 @@ function Profile() {
         </Col>
         <Col>
           <h2>{LoginStatus.name}</h2>
-          <h4>({LoginStatus.email})</h4>
+          <h4>{LoginStatus.email}</h4>
         </Col>
       </Row>
 

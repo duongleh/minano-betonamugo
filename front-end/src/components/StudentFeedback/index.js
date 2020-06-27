@@ -11,7 +11,7 @@ function StudentFeedback({rate}) {
       <Row>
         <Col>
           <p className='rate_f'>{rate}</p>
-          <Rate disabled allowHalf value={rate} />
+          <Rate disabled value={rate} />
         </Col>
         <Col span={15}>
           {stars.map((star) => (

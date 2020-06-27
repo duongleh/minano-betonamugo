@@ -19,7 +19,7 @@ function CourseCard({ courseDetail, progress }) {
         {!!progress ? <p style={{ margin: '0px' }}>{progress}%</p> : ''}
         <Col>
           <div className='space rate'>
-            <Rate allowHalf value={courseDetail.rate}/>
+            <Rate value={courseDetail.rate}/>
           </div>
         </Col>
       </Row>

@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'antd';
 
 import './index.css';
 
 function Certificate() {
+  const [user, setUser] = useState('');
+
+  useEffect(() => {
+    const credentials = JSON.parse(atob(localStorage.getItem('token').split('.')[1]));
+    setUser(credentials.name);
+  });
+
   return (
     <div style={{ margin: '30px 0px' }}>
       <div className='center pm-certificate-container'>
@@ -30,7 +37,7 @@ function Certificate() {
 
               <div className='col-xs-12'>
                 <div className='pm-certificate-name underline margin-0 col-xs-8 text-center'>
-                  <span className='nameOfUser bold Rochester'>Do Duc Hoang</span>
+                  <span className='nameOfUser bold Rochester'>{user}</span>
                 </div>
                 <div className='col-xs-2'>{/* <!-- LEAVE EMPTY --> */}</div>
               </div>

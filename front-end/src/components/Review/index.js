@@ -67,7 +67,6 @@ const Review = ({ review, fetchCourse, enrollment }) => {
           <Col>
             <Row justify='end'>
               <Rate
-                allowHalf
                 onChange={(event) => setStar(event)}
                 style={{ marginRight: '15px' }}
               />
