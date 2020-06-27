@@ -1,21 +1,23 @@
 import React from 'react';
-import { Table, Col } from 'antd';
-
-const columns = [
-  {
-    title: 'Title',
-    dataIndex: 'title',
-    key: 'title'
-  }
-];
+import { List, Avatar } from 'antd';
 
 function CourseContent({ videos }) {
+  console.log(videos);
   return (
     <div>
       <h1 className='tl'>Course Content</h1>
-      <Col>
-        <Table rowKey={(videos) => videos.id} dataSource={videos} columns={columns} />;
-      </Col>
+      <List
+        itemLayout='horizontal'
+        dataSource={videos}
+        renderItem={(item) => (
+          <List.Item>
+            <List.Item.Meta
+              avatar={<Avatar>{videos.indexOf(item) + 1}</Avatar>}
+              title={item.title}
+            />
+          </List.Item>
+        )}
+      />
     </div>
   );
 }
